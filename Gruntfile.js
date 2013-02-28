@@ -227,6 +227,30 @@ module.exports = function (grunt) {
         ]);
     });
 
+    /* Push up to couchdb server for dev test */
+    grunt.registerTask('couchapp', 'deploy couchapp', function() {
+        var done = this.async();
+
+        var urlOptions = {
+            protocol: process.env.COUCHAPP_PROTOCOL || 'http',
+            hostname: process.env.COUCHAPP_SERVER || 'localhost',
+            port: process.env.COUCHAPP_PORT || '5984',
+            pathname: process.env.COUCHAPP_PATH || '/acralyzer'
+        };
+        if (process.env.COUCHAPP_AUTH) {
+            urlOptions.auth = process.env.COUCHAPP_AUTH;
+        }
+
+        grunt.util.spawn({
+            cmd: 'couchapp',
+            args: ['push',url.format(urlOptions)]
+        }, function(err, res/*, code*/) {
+            grunt.log.ok();
+            grunt.log.write(res.stderr);
+            done();
+        });
+    });
+
     grunt.registerTask('test', [
         'clean:server',
         'compass',
