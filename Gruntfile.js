@@ -1,10 +1,7 @@
 // Generated on 2013-02-28 using generator-webapp 0.1.5
 'use strict';
 var url = require('url');
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
+var util = require('util');
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -28,57 +25,6 @@ module.exports = function (grunt) {
             compass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
-            },
-            livereload: {
-                files: [
-                    '<%= yeoman.app %>/*.html',
-                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
-                ],
-                tasks: ['livereload']
-            }
-        },
-        connect: {
-            options: {
-                port: 9000,
-                // change this to '0.0.0.0' to access the server from outside
-                hostname: 'localhost'
-            },
-            livereload: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'app')
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test')
-                        ];
-                    }
-                }
-            },
-            dist: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, 'dist')
-                        ];
-                    }
-                }
-            }
-        },
-        open: {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
             }
         },
         clean: {
@@ -92,6 +38,7 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!<%= yeoman.app %>/vendor/*',
                 '!<%= yeoman.app %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
@@ -108,10 +55,10 @@ module.exports = function (grunt) {
             options: {
                 sassDir: '<%= yeoman.app %>/styles',
                 cssDir: '.tmp/styles',
-                imagesDir: '<%= yeoman.app %>/images',
+                imagesDir: '<%= yeoman.app %>/img',
                 javascriptsDir: '<%= yeoman.app %>/scripts',
                 fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: 'app/components',
+                importPath: '<%= yeoman.app %>/components',
                 relativeAssets: true
             },
             dist: {},
@@ -126,7 +73,6 @@ module.exports = function (grunt) {
         /*concat: {
             dist: {}
         },*/
-
         uglify: {
             dist: {
                 files: {
@@ -153,9 +99,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.app %>/images',
+                    cwd: '<%= yeoman.app %>/img',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= yeoman.dist %>/images'
+                    dest: '<%= yeoman.dist %>/img'
                 }]
             }
         },
@@ -182,12 +128,20 @@ module.exports = function (grunt) {
                     removeEmptyAttributes: true,
                     removeOptionalTags: true*/
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    src: '*.html',
-                    dest: '<%= yeoman.dist %>'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        src: '*.html',
+                        dest: '<%= yeoman.dist %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/partials',
+                        src: '*.html',
+                        dest: '<%= yeoman.dist %>/partials'
+                    }
+                ]
             }
         },
         copy: {
@@ -199,6 +153,8 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>',
                     src: [
                         '*.{ico,txt}',
+                        'img/*.gif',
+                        'vendor/bootstrap/img/*.png',
                         '.htaccess'
                     ]
                 }]
@@ -212,21 +168,6 @@ module.exports = function (grunt) {
     });
 
     grunt.renameTask('regarde', 'watch');
-
-    grunt.registerTask('server', function (target) {
-        if (target === 'dist') {
-            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-        }
-
-        grunt.task.run([
-            'clean:server',
-            'compass:server',
-            'livereload-start',
-            'connect:livereload',
-            'open',
-            'watch'
-        ]);
-    });
 
     /* Push up to couchdb server for dev test */
     grunt.registerTask('couchapp', 'deploy couchapp', function() {
@@ -242,10 +183,13 @@ module.exports = function (grunt) {
             urlOptions.auth = process.env.COUCHAPP_AUTH;
         }
 
-        grunt.util.spawn({
+        var spawnOpts = {
             cmd: 'couchapp',
             args: ['push',url.format(urlOptions)]
-        }, function(err, res/*, code*/) {
+        };
+        grunt.verbose.writeln('Now Running' + util.inspect(spawnOpts).cyan);
+
+        grunt.util.spawn(spawnOpts, function(err, res/*, code*/) {
             grunt.log.ok();
             grunt.log.write(res.stderr);
             done();
@@ -255,7 +199,6 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'compass',
-        'connect:test',
         'mocha'
     ]);
 

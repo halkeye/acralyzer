@@ -23,11 +23,20 @@
     <meta charset="utf-8">
     <link rel="alternate" type="application/rss+xml"  href="{{rsslink}}" title="Latest Crash Reports">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- build:css vendor/bootstrap/css/bootstrap.min.css -->
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-responsive.min.css" type="text/css">
+    <!-- endbuild -->
+
+    <!-- build:css vendor/bootstrap-notify/css/bootstrap-notify.css -->
     <link rel="stylesheet" href="vendor/bootstrap-notify/css/bootstrap-notify.css" type="text/css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.min.css -->
     <link rel="stylesheet" href="styles/main.css" type="text/css">
     <link rel="stylesheet" href="styles/graph.css" type="text/css">
+    <!-- endbuild -->
   </head>
   <body>
     <div class="navbar navbar-fixed-top" ng-controller="NavigationCtrl">
@@ -94,10 +103,12 @@
 
     </footer>
 
+    <!-- build:js scripts/vendors.js -->
     <script src="vendor/jquery/jquery-1.8.3.min.js"></script>
     <script src="vendor/angular/angular.min.js"></script>
     <script src="vendor/angular/angular-resource.min.js"></script>
     <script src="vendor/d3/d3.v3.min.js"></script>
+    <!-- endbuild -->
     <!-- build:js scripts/libs.js -->
     <script src="vendor/couchapp/sha1.js"></script>
     <script src="vendor/couchapp/json2.js"></script>
