@@ -1,11 +1,11 @@
 {
-    "predef": {
-        "angular": true,
-        "moment": true,
+    "predef": [
+        "angular",
+        "moment",
 
-        "d3": true,
-        "prettyPrint": true
-    },
+        "d3",
+        "prettyPrint"
+    ],
     "strict": true,
     "curly": true,
     "eqeqeq": true,
