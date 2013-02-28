@@ -1,4 +1,7 @@
 [
+  "node_modules",
+  "Gruntfile.js",
+  "package.json",
   "^imgsrc",
   "^usertemplates",
   "LICENSE",
