@@ -1,4 +1,4 @@
-// Generated on 2013-02-28 using generator-webapp 0.1.5
+/*jshint node:true*/
 'use strict';
 var url = require('url');
 var util = require('util');
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
                 files: {
                     '<%= yeoman.dist %>/scripts/main.js': [
                         '<%= yeoman.app %>/scripts/{,*/}*.js'
-                    ],
+                    ]
                 }
             }
         },
