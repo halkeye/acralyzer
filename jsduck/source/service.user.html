@@ -35,41 +35,53 @@
  */
 (function(acralyzerConfig,acralyzer,acralyzerEvents,$) {
     &quot;use strict&quot;;
-<span id='$user'>    /**
-</span>    * @class $user
-    * Couchdb user service
-    * @extends ngService
+<span id='user'>    /**
+</span>    * Couchdb user service
+    *
+    * @class user
     * @singleton
+    * @static
     */
     acralyzer.service('$user', ['$rootScope', '$q', function($rootScope, $q) {
         var ret = this;
 
         ret.hasAdminPath = undefined;
-<span id='$user-method-reset'>        /**
+<span id='user-method-reset'>        /**
 </span>        * Resets the user object back to the default state
+        * @method reset
         */
         ret.reset = function() {
-<span id='$user-property-username'>            /** 
-</span>             * @property {String} 
-             * Username of current logged in user
+<span id='user-property-username'>            /** 
+</span>             * Username of current logged in user
+             *
+             * @property {String} username
+             * @type String
+             * @readOnly
              */
             ret.username = null;
-<span id='$user-property-isAdmin'>            /**
-</span>             * @property {Boolean}
-             * Is current user an admin
+<span id='user-property-isAdmin'>            /**
+</span>             * Is current user an admin
+             *
+             * @property {Boolean} isAdmin
+             * @type Boolean
+             * @readOnly
              */
             ret.isAdmin = false;
-<span id='$user-property-roles'>            /**
-</span>             * @property {Object}
-             * Current users roles (as object)
+<span id='user-property-roles'>            /**
+</span>             * Current users roles (as object)
+             *
+             * @property {Object} roles
+             * @type Object
+             * @readOnly
              */
             ret.roles = {};
         };
         ret.reset();
-<span id='$user-method-updateSession'>        /**
+<span id='user-method-updateSession'>        /**
 </span>         * Updates the session of the current user 
          *
          * @private
+         * @method updateSession
          * @param {Promise} deferred Promise to update when completed
          */
         ret.updateSession = function(deferred) {
@@ -116,9 +128,10 @@
             });
         };
 
-<span id='$user-method-login'>        /**
+<span id='user-method-login'>        /**
 </span>        * Logs in the user.
         *
+        * @method login
         * @param {String} username Username to log in with
         * @param {String} password Password to log in username with
         *
@@ -145,11 +158,12 @@
             return deferred.promise;
         };
 
-<span id='$user-method-changePassword'>        /**
+<span id='user-method-changePassword'>        /**
 </span>        * Changes the password of the currently logged in user
         *
         * Side effect: logs out user
         *
+        * @method changePassword
         * @param {String} password New Password for the user
         *
         * @return {Promise} Promise for completion of change password
@@ -213,9 +227,10 @@
             return deferred.promise;
         };
 
-<span id='$user-method-logout'>        /**
+<span id='user-method-logout'>        /**
 </span>        * Logout the current user
         *
+        * @method logout
         * @return {Promise} Promise for completion of logout
         */
         ret.logout = function() {
@@ -237,6 +252,7 @@
             return deferred.promise;
         };
 
+        /* First time we grab our session from couchdb */
         ret.updateSession();
         return ret;
     }]);

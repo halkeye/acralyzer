@@ -12,7 +12,7 @@
             "name": "_attachments/script/service.user.js",
             "modules": {},
             "classes": {
-                "$user\nCouchdb user service": 1
+                "user": 1
             },
             "fors": {},
             "namespaces": {}
@@ -20,9 +20,9 @@
     },
     "modules": {},
     "classes": {
-        "$user\nCouchdb user service": {
-            "name": "$user\nCouchdb user service",
-            "shortname": "$user\nCouchdb user service",
+        "user": {
+            "name": "user",
+            "shortname": "user",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -30,15 +30,16 @@
             "extension_for": [],
             "file": "_attachments/script/service.user.js",
             "line": 21,
-            "extends": "ngService",
-            "singleton": ""
+            "description": "Couchdb user service",
+            "singleton": "",
+            "static": 1
         }
     },
     "classitems": [
         {
             "file": "_attachments/script/acra-storage.js",
             "line": 25,
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/acra-storage.js",
@@ -54,7 +55,7 @@
                     "description": "callback to be executed after database changed."
                 }
             ],
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/acra-storage.js",
@@ -70,7 +71,7 @@
                     "description": ": callback to be triggered if an error occurs."
                 }
             ],
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/acra-storage.js",
@@ -93,44 +94,54 @@
             "return": {
                 "description": "Key: date/time, Value: quantity"
             },
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 31,
+            "line": 32,
             "description": "Resets the user object back to the default state",
-            "class": "$user\nCouchdb user service"
+            "itemtype": "method",
+            "name": "reset",
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 35,
+            "line": 37,
+            "description": "Username of current logged in user",
             "itemtype": "property",
-            "name": "!~YUIDOC_LINE~!Username of current logged in user",
+            "name": "username",
             "type": "String",
-            "class": "$user\nCouchdb user service"
-        },
-        {
-            "file": "_attachments/script/service.user.js",
-            "line": 40,
-            "itemtype": "property",
-            "name": "!~YUIDOC_LINE~!Is current user an admin",
-            "type": "Boolean",
-            "class": "$user\nCouchdb user service"
+            "readonly": "",
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
             "line": 45,
+            "description": "Is current user an admin",
             "itemtype": "property",
-            "name": "!~YUIDOC_LINE~!Current users roles (as object)",
-            "type": "Object",
-            "class": "$user\nCouchdb user service"
+            "name": "isAdmin",
+            "type": "Boolean",
+            "readonly": "",
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 52,
+            "line": 53,
+            "description": "Current users roles (as object)",
+            "itemtype": "property",
+            "name": "roles",
+            "type": "Object",
+            "readonly": "",
+            "class": "user"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 63,
             "description": "Updates the session of the current user",
             "access": "private",
             "tagname": "",
+            "itemtype": "method",
+            "name": "updateSession",
             "params": [
                 {
                     "name": "deferred",
@@ -138,12 +149,14 @@
                     "type": "Promise"
                 }
             ],
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 102,
+            "line": 114,
             "description": "Logs in the user.",
+            "itemtype": "method",
+            "name": "login",
             "params": [
                 {
                     "name": "username",
@@ -160,12 +173,14 @@
                 "description": "Promise for completion of login",
                 "type": "Promise"
             },
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 131,
+            "line": 144,
             "description": "Changes the password of the currently logged in user\n\nSide effect: logs out user",
+            "itemtype": "method",
+            "name": "changePassword",
             "params": [
                 {
                     "name": "password",
@@ -177,17 +192,19 @@
                 "description": "Promise for completion of change password",
                 "type": "Promise"
             },
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         },
         {
             "file": "_attachments/script/service.user.js",
-            "line": 199,
+            "line": 213,
             "description": "Logout the current user",
+            "itemtype": "method",
+            "name": "logout",
             "return": {
                 "description": "Promise for completion of logout",
                 "type": "Promise"
             },
-            "class": "$user\nCouchdb user service"
+            "class": "user"
         }
     ],
     "warnings": [
@@ -210,26 +227,6 @@
         {
             "message": "Missing item type\nGets the number of reports per unit of time.",
             "line": " _attachments/script/acra-storage.js:70"
-        },
-        {
-            "message": "Missing item type\nResets the user object back to the default state",
-            "line": " _attachments/script/service.user.js:31"
-        },
-        {
-            "message": "Missing item type\nUpdates the session of the current user",
-            "line": " _attachments/script/service.user.js:52"
-        },
-        {
-            "message": "Missing item type\nLogs in the user.",
-            "line": " _attachments/script/service.user.js:102"
-        },
-        {
-            "message": "Missing item type\nChanges the password of the currently logged in user\n\nSide effect: logs out user",
-            "line": " _attachments/script/service.user.js:131"
-        },
-        {
-            "message": "Missing item type\nLogout the current user",
-            "line": " _attachments/script/service.user.js:199"
         }
     ]
 }

@@ -41,9 +41,7 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="..&#x2F;classes/$user
-Couchdb user service.html">$user
-Couchdb user service</a></li>
+                <li><a href="..&#x2F;classes/user.html">user</a></li>
             
             </ul>
 
@@ -109,10 +107,11 @@ Couchdb user service</a></li>
 (function(acralyzerConfig,acralyzer,acralyzerEvents,$) {
     &quot;use strict&quot;;
     &#x2F;**
-    * @class $user
     * Couchdb user service
-    * @extends ngService
+    *
+    * @class user
     * @singleton
+    * @static
     *&#x2F;
     acralyzer.service(&#x27;$user&#x27;, [&#x27;$rootScope&#x27;, &#x27;$q&#x27;, function($rootScope, $q) {
         var ret = this;
@@ -120,21 +119,31 @@ Couchdb user service</a></li>
         ret.hasAdminPath = undefined;
         &#x2F;**
         * Resets the user object back to the default state
+        * @method reset
         *&#x2F;
         ret.reset = function() {
             &#x2F;** 
-             * @property {String} 
              * Username of current logged in user
+             *
+             * @property {String} username
+             * @type String
+             * @readOnly
              *&#x2F;
             ret.username = null;
             &#x2F;**
-             * @property {Boolean}
              * Is current user an admin
+             *
+             * @property {Boolean} isAdmin
+             * @type Boolean
+             * @readOnly
              *&#x2F;
             ret.isAdmin = false;
             &#x2F;**
-             * @property {Object}
              * Current users roles (as object)
+             *
+             * @property {Object} roles
+             * @type Object
+             * @readOnly
              *&#x2F;
             ret.roles = {};
         };
@@ -143,6 +152,7 @@ Couchdb user service</a></li>
          * Updates the session of the current user 
          *
          * @private
+         * @method updateSession
          * @param {Promise} deferred Promise to update when completed
          *&#x2F;
         ret.updateSession = function(deferred) {
@@ -192,6 +202,7 @@ Couchdb user service</a></li>
         &#x2F;**
         * Logs in the user.
         *
+        * @method login
         * @param {String} username Username to log in with
         * @param {String} password Password to log in username with
         *
@@ -223,6 +234,7 @@ Couchdb user service</a></li>
         *
         * Side effect: logs out user
         *
+        * @method changePassword
         * @param {String} password New Password for the user
         *
         * @return {Promise} Promise for completion of change password
@@ -289,6 +301,7 @@ Couchdb user service</a></li>
         &#x2F;**
         * Logout the current user
         *
+        * @method logout
         * @return {Promise} Promise for completion of logout
         *&#x2F;
         ret.logout = function() {
@@ -310,6 +323,7 @@ Couchdb user service</a></li>
             return deferred.promise;
         };
 
+        &#x2F;* First time we grab our session from couchdb *&#x2F;
         ret.updateSession();
         return ret;
     }]);
