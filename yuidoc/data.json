@@ -1,0 +1,1179 @@
+{
+    "project": {},
+    "files": {
+        "_attachments/script/acra-storage.js": {
+            "name": "_attachments/script/acra-storage.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "_attachments/script/service.user.js": {
+            "name": "_attachments/script/service.user.js",
+            "modules": {},
+            "classes": {
+                "$user\nCouchdb user service": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "_attachments/vendor/bootstrap-notify/js/bootstrap-notify.js": {
+            "name": "_attachments/vendor/bootstrap-notify/js/bootstrap-notify.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "_attachments/vendor/couchapp/jquery.couch.js": {
+            "name": "_attachments/vendor/couchapp/jquery.couch.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {
+                "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>": 1,
+                "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>": 1,
+                "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>": 1
+            }
+        }
+    },
+    "modules": {},
+    "classes": {
+        "$user\nCouchdb user service": {
+            "name": "$user\nCouchdb user service",
+            "shortname": "$user\nCouchdb user service",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_attachments/script/service.user.js",
+            "line": 21,
+            "extends": "ngService",
+            "singleton": ""
+        }
+    },
+    "classitems": [
+        {
+            "file": "_attachments/script/acra-storage.js",
+            "line": 25,
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/acra-storage.js",
+            "line": 31,
+            "description": "Switch to another app, i.e. reports storage database.",
+            "params": [
+                {
+                    "name": "newAppName",
+                    "description": "The app name. The database name is determined by adding prefix set in\nacralyzerConfig.appDBPrefix"
+                },
+                {
+                    "name": "cb",
+                    "description": "callback to be executed after database changed."
+                }
+            ],
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/acra-storage.js",
+            "line": 47,
+            "description": "Gets the list of available apps for which we have crash reports databases.\nLooks for all CouchDB databases starting with",
+            "params": [
+                {
+                    "name": "cb",
+                    "description": ": callback which will receive an array of strings (app names) as a parameter."
+                },
+                {
+                    "name": "errorHandler",
+                    "description": ": callback to be triggered if an error occurs."
+                }
+            ],
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/acra-storage.js",
+            "line": 70,
+            "description": "Gets the number of reports per unit of time.",
+            "params": [
+                {
+                    "name": "grouplvl",
+                    "description": "Grouping level: Year = 1, Month = 2, Day = 3, Hour = 4, Minute = 5, Second = 6."
+                },
+                {
+                    "name": "cb",
+                    "description": "Callback which receives the results."
+                },
+                {
+                    "name": "errorHandler",
+                    "description": "Called in case of error while retreiving data"
+                }
+            ],
+            "return": {
+                "description": "Key: date/time, Value: quantity"
+            },
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 31,
+            "description": "Resets the user object back to the default state",
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 35,
+            "itemtype": "property",
+            "name": "!~YUIDOC_LINE~!Username of current logged in user",
+            "type": "String",
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 40,
+            "itemtype": "property",
+            "name": "!~YUIDOC_LINE~!Is current user an admin",
+            "type": "Boolean",
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 45,
+            "itemtype": "property",
+            "name": "!~YUIDOC_LINE~!Current users roles (as object)",
+            "type": "Object",
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 52,
+            "description": "Updates the session of the current user",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "deferred",
+                    "description": "Promise to update when completed",
+                    "type": "Promise"
+                }
+            ],
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 102,
+            "description": "Logs in the user.",
+            "params": [
+                {
+                    "name": "username",
+                    "description": "Username to log in with",
+                    "type": "String"
+                },
+                {
+                    "name": "password",
+                    "description": "Password to log in username with",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Promise for completion of login",
+                "type": "Promise"
+            },
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 131,
+            "description": "Changes the password of the currently logged in user\n\nSide effect: logs out user",
+            "params": [
+                {
+                    "name": "password",
+                    "description": "New Password for the user",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Promise for completion of change password",
+                "type": "Promise"
+            },
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/script/service.user.js",
+            "line": 199,
+            "description": "Logout the current user",
+            "return": {
+                "description": "Promise for completion of logout",
+                "type": "Promise"
+            },
+            "class": "$user\nCouchdb user service"
+        },
+        {
+            "file": "_attachments/vendor/bootstrap-notify/js/bootstrap-notify.js",
+            "line": 1,
+            "description": "bootstrap-notify.js v1.0.0\n--\nCopyright 2012 Nijiko Yonskai <nijikokun@gmail.com>\nCopyright 2012 Goodybag, Inc.\n--\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.",
+            "class": ""
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 13,
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 40,
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 42,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 54,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 63,
+            "description": "You can obtain a list of active tasks by using the /_active_tasks URL.\nThe result is a JSON array of the currently running tasks, with each task\nbeing described with a single object.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/uploads/\nall/documentation/couchbase-api-misc.html#couchbase-api-misc_active-task\ns_get\">docs for /_active_tasks</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/jQuery.ajax\n/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 81,
+            "description": "Returns a list of all the databases in the CouchDB instance",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/uploads/\nall/documentation/couchbase-api-misc.html#couchbase-api-misc_active-task\ns_get\">docs for /_all_dbs</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/jQuery.ajax\n/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 97,
+            "description": "View and edit the CouchDB configuration, called with just the options\nparameter the entire config is returned, you can be more specific by\npassing the section and option parameters, if you specify a value that\nvalue will be stored in the configuration.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/uploads/\nall/documentation/couchbase-api-config.html#couchbase-api-config_config\n-section-key_put\">docs for /_config</a>"
+            ],
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "section",
+                    "description": "the section of the config",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "option",
+                    "description": "the particular config option",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "value",
+                    "description": "value to be set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 134,
+            "description": "Returns the session information for the currently logged in user.",
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 160,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 172,
+            "description": "Create a new user on the CouchDB server, <code>user_doc</code> is an\nobject with a <code>name</code> field and other information you want\nto store relating to that user, for example\n<code>{\"name\": \"daleharvey\"}</code>",
+            "params": [
+                {
+                    "name": "user_doc",
+                    "description": "Users details",
+                    "type": "Object"
+                },
+                {
+                    "name": "password",
+                    "description": "Users password",
+                    "type": "String"
+                },
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 196,
+            "description": "Authenticate against CouchDB, the <code>options</code> parameter is\nexpected to have <code>name</code> and <code>password</code> fields.",
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 225,
+            "description": "Delete your current CouchDB user session",
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch is used to communicate with a CouchDB server, the server methods can\nbe called directly without creating an instance. Typically all methods are\npassed an <code>options</code> object which defines a success callback which\nis called with the data returned from the http request to CouchDB, you can\nfind the other settings that can be used in the <code>options</code> object\nfrom <a href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery.ajax settings</a>\n<pre><code>$.couch.activeTasks({\n  success: function (data) {\n    console.log(data);\n  }\n});</code></pre>\nOutputs (for example):\n<pre><code>[\n {\n  \"pid\" : \"<0.11599.0>\",\n  \"status\" : \"Copied 0 of 18369 changes (0%)\",\n  \"task\" : \"recipes\",\n  \"type\" : \"Database Compaction\"\n }\n]</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 252,
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 286,
+            "description": "Request compaction of the specified database.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb-compact_post\">docs for /db/_compact</a>"
+            ],
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!<a",
+                    "description": "href=\"http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings\">\njQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 306,
+            "description": "Cleans up the cached view output on disk for a given view.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db\n_db-view-cleanup_post\">docs for /db/_compact</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 325,
+            "description": "Compacts the view indexes associated with the specified design\ndocument. You can use this in place of the full database compaction\nif you know a specific set of view indexes have been affected by a\nrecent database change.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/upl\noads/all/documentation/couchbase-api-db.html#couchbase-api-db_db-\ncompact-design-doc_post\">docs for /db/_compact/design-doc</a>"
+            ],
+            "params": [
+                {
+                    "name": "groupname",
+                    "description": "Name of design-doc to compact",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 348,
+            "description": "Create a new database",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb_put\">docs for PUT /db/</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 367,
+            "description": "Deletes the specified database, and all the documents and\nattachments contained within it.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb_delete\">docs for DELETE /db/</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 384,
+            "description": "Gets information about the specified database.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db\n_db_get\">docs for GET /db/</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db is used to communicate with a specific CouchDB database\n<pre><code>var $db = $.couch.db(\"mydatabase\");\n$db.allApps({\n success: function (data) {\n   ... process data ...\n }\n});\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 400,
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 418,
+            "description": "Add a listener callback",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/\nfiles/uploads/all/documentation/couchbase-api-db.html#couch\nbase-api-db_db-changes_get\">docs for /db/_changes</a>"
+            ],
+            "params": [
+                {
+                    "name": "fun",
+                    "description": "Callback function to run when\nnotified of changes.",
+                    "type": "Function"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 429,
+            "description": "Stop subscribing to the changes feed",
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 484,
+            "description": "Fetch all the docs in this db, you can specify an array of keys to\nfetch by passing the <code>keys</code> field in the\n<code>options</code>\nparameter.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb-all-docs_get\">docs for /db/all_docs/</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 514,
+            "description": "Fetch all the design docs in this db",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 524,
+            "description": "Fetch all the design docs with an index.html, <code>options</code>\nparameter expects an <code>eachApp</code> field which is a callback\ncalled on each app found.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 561,
+            "description": "Returns the specified doc from the specified db.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-dbdoc.html#couchbase-api-\ndbdoc_db-doc_get\">docs for GET /db/doc</a>"
+            ],
+            "params": [
+                {
+                    "name": "docId",
+                    "description": "id of document to fetch",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "ajaxOptions",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 602,
+            "description": "Create a new document in the specified database, using the supplied\nJSON document structure. If the JSON structure includes the _id\nfield, then the document will be created with the specified document\nID. If the _id field is not specified, a new unique ID will be\ngenerated.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-dbdoc.html#couchbase-api-\ndbdoc_db_post\">docs for GET /db/doc</a>"
+            ],
+            "params": [
+                {
+                    "name": "doc",
+                    "description": "document to save",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 657,
+            "description": "Save a list of documents",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb-bulk-docs_post\">docs for /db/_bulk_docs</a>"
+            ],
+            "params": [
+                {
+                    "name": "docs",
+                    "description": "List of documents to save",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 679,
+            "description": "Deletes the specified document from the database. You must supply\nthe current (latest) revision and <code>id</code> of the document\nto delete eg <code>removeDoc({_id:\"mydoc\", _rev: \"1-2345\"})</code>",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-dbdoc.html#couchbase-api\n-dbdoc_db-doc_delete\">docs for DELETE /db/doc</a>"
+            ],
+            "params": [
+                {
+                    "name": "doc",
+                    "description": "Document to delete",
+                    "type": "Object"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 702,
+            "description": "Remove a set of documents",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db_\ndb-bulk-docs_post\">docs for /db/_bulk_docs</a>"
+            ],
+            "params": [
+                {
+                    "name": "docs",
+                    "description": "List of document id's to remove",
+                    "type": "String[]"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 728,
+            "description": "The COPY command (which is non-standard HTTP) copies an existing\ndocument to a new or existing document.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-dbdoc.html#couchbase-api-\ndbdoc_db-doc_copy\">docs for COPY /db/doc</a>"
+            ],
+            "params": [
+                {
+                    "name": "docId",
+                    "description": "document id to copy",
+                    "type": "String[]"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 763,
+            "description": "Creates (and executes) a temporary view based on the view function\nsupplied in the JSON request.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-db.html#couchbase-api-db\n_db-temp-view_post\">docs for /db/_temp_view</a>"
+            ],
+            "params": [
+                {
+                    "name": "mapFun",
+                    "description": "Map function",
+                    "type": "Function"
+                },
+                {
+                    "name": "reduceFun",
+                    "description": "Reduce function",
+                    "type": "Function"
+                },
+                {
+                    "name": "language",
+                    "description": "Language the map / reduce funs are\nimplemented in",
+                    "type": "Function"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 799,
+            "description": "Fetch a _list view output, you can specify a list of\n<code>keys</code> in the options object to recieve only those keys.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-design.html#couchbase-api\n-design_db-design-designdoc-list-listname-viewname_get\">\ndocs for /db/_design/design-doc/_list/l1/v1</a>"
+            ],
+            "params": [
+                {
+                    "name": "list",
+                    "description": "Listname in the form of ddoc/listname",
+                    "type": "String"
+                },
+                {
+                    "name": "view",
+                    "description": "View to run list against",
+                    "type": "String"
+                },
+                {
+                    "name": "CouchDB",
+                    "description": "<a href=\"http://wiki.apache.org/couchdb/\nHTTP_view_API\">View Options</a>",
+                    "type": "Options"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 834,
+            "description": "Executes the specified view-name from the specified design-doc\ndesign document, you can specify a list of <code>keys</code>\nin the options object to recieve only those keys.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-design.html#couchbase-api-\ndesign_db-design-designdoc-view-viewname_get\">docs for /db/\n_design/design-doc/_list/l1/v1</a>"
+            ],
+            "params": [
+                {
+                    "name": "name",
+                    "description": "View to run list against",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 867,
+            "description": "Fetch an arbitrary CouchDB database property",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api.html\">docs for /db/_prop</a>"
+            ],
+            "params": [
+                {
+                    "name": "propName",
+                    "description": "Propery name to fetch",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "ajaxOptions",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 885,
+            "description": "Set an arbitrary CouchDB database property",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api.html\">docs for /db/_prop</a>"
+            ],
+            "params": [
+                {
+                    "name": "propName",
+                    "description": "Propery name to fetch",
+                    "type": "String"
+                },
+                {
+                    "name": "propValue",
+                    "description": "Propery value to set",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "ajaxOptions",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 912,
+            "description": "Accessing the root of a CouchDB instance returns meta information about\nthe instance. The response is a JSON structure containing information\nabout the server, including a welcome message and the version of the\nserver.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/uploads/\nall/documentation/couchbase-api-misc.html#couchbase-api-misc_root_get\">\ndocs for GET /</a>"
+            ],
+            "params": [
+                {
+                    "name": "options",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 931,
+            "description": "Request, configure, or stop, a replication operation.",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-misc.html#couchbase-api-\nmisc_replicate_post\">docs for POST /_replicate</a>"
+            ],
+            "params": [
+                {
+                    "name": "source",
+                    "description": "Path or url to source database",
+                    "type": "String"
+                },
+                {
+                    "name": "target",
+                    "description": "Path or url to target database",
+                    "type": "String"
+                },
+                {
+                    "name": "ajaxOptions",
+                    "description": "<a href=\"http://api.jquery.com/\njQuery.ajax/#jQuery-ajax-settings\">jQuery ajax settings</a>",
+                    "type": "AjaxSettings"
+                },
+                {
+                    "name": "repOpts",
+                    "description": "Additional replication options",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 957,
+            "description": "Fetch a new UUID",
+            "see": [
+                "<a href=\"http://techzone.couchbase.com/sites/default/files/\nuploads/all/documentation/couchbase-api-misc.html#couchbase-api-\nmisc_uuids_get\">docs for /_uuids</a>"
+            ],
+            "params": [
+                {
+                    "name": "cacheNum",
+                    "description": "Number of uuids to keep cached for future use",
+                    "type": "Int"
+                }
+            ],
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 982,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 1031,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 1046,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        },
+        {
+            "file": "_attachments/vendor/couchapp/jquery.couch.js",
+            "line": 1068,
+            "access": "private",
+            "tagname": "",
+            "class": "",
+            "namespace": "$.couch.db.changes provides an API for subscribing to the changes\nfeed\n<pre><code>var $changes = $.couch.db(\"mydatabase\").changes();\n$changes.onChange = function (data) {\n   ... process data ...\n}\n$changes.stop();\n</code></pre>"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: singleton",
+            "line": " _attachments/script/service.user.js:21"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/script/acra-storage.js:25"
+        },
+        {
+            "message": "Missing item type\nSwitch to another app, i.e. reports storage database.",
+            "line": " _attachments/script/acra-storage.js:31"
+        },
+        {
+            "message": "Missing item type\nGets the list of available apps for which we have crash reports databases.\nLooks for all CouchDB databases starting with",
+            "line": " _attachments/script/acra-storage.js:47"
+        },
+        {
+            "message": "Missing item type\nGets the number of reports per unit of time.",
+            "line": " _attachments/script/acra-storage.js:70"
+        },
+        {
+            "message": "Missing item type\nResets the user object back to the default state",
+            "line": " _attachments/script/service.user.js:31"
+        },
+        {
+            "message": "Missing item type\nUpdates the session of the current user",
+            "line": " _attachments/script/service.user.js:52"
+        },
+        {
+            "message": "Missing item type\nLogs in the user.",
+            "line": " _attachments/script/service.user.js:102"
+        },
+        {
+            "message": "Missing item type\nChanges the password of the currently logged in user\n\nSide effect: logs out user",
+            "line": " _attachments/script/service.user.js:131"
+        },
+        {
+            "message": "Missing item type\nLogout the current user",
+            "line": " _attachments/script/service.user.js:199"
+        },
+        {
+            "message": "Missing item type\nbootstrap-notify.js v1.0.0\n--\nCopyright 2012 Nijiko Yonskai <nijikokun@gmail.com>\nCopyright 2012 Goodybag, Inc.\n--\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.",
+            "line": " _attachments/vendor/bootstrap-notify/js/bootstrap-notify.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:13"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:40"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:42"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:54"
+        },
+        {
+            "message": "Missing item type\nYou can obtain a list of active tasks by using the /_active_tasks URL.\nThe result is a JSON array of the currently running tasks, with each task\nbeing described with a single object.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:63"
+        },
+        {
+            "message": "Missing item type\nReturns a list of all the databases in the CouchDB instance",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:81"
+        },
+        {
+            "message": "Missing item type\nView and edit the CouchDB configuration, called with just the options\nparameter the entire config is returned, you can be more specific by\npassing the section and option parameters, if you specify a value that\nvalue will be stored in the configuration.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:97"
+        },
+        {
+            "message": "Missing item type\nReturns the session information for the currently logged in user.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:134"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:160"
+        },
+        {
+            "message": "Missing item type\nCreate a new user on the CouchDB server, <code>user_doc</code> is an\nobject with a <code>name</code> field and other information you want\nto store relating to that user, for example\n<code>{\"name\": \"daleharvey\"}</code>",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:172"
+        },
+        {
+            "message": "Missing item type\nAuthenticate against CouchDB, the <code>options</code> parameter is\nexpected to have <code>name</code> and <code>password</code> fields.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:196"
+        },
+        {
+            "message": "Missing item type\nDelete your current CouchDB user session",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:225"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:252"
+        },
+        {
+            "message": "Missing item type\nRequest compaction of the specified database.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:286"
+        },
+        {
+            "message": "Missing item type\nCleans up the cached view output on disk for a given view.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:306"
+        },
+        {
+            "message": "Missing item type\nCompacts the view indexes associated with the specified design\ndocument. You can use this in place of the full database compaction\nif you know a specific set of view indexes have been affected by a\nrecent database change.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:325"
+        },
+        {
+            "message": "Missing item type\nCreate a new database",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:348"
+        },
+        {
+            "message": "Missing item type\nDeletes the specified database, and all the documents and\nattachments contained within it.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:367"
+        },
+        {
+            "message": "Missing item type\nGets information about the specified database.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:384"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:400"
+        },
+        {
+            "message": "Missing item type\nAdd a listener callback",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:418"
+        },
+        {
+            "message": "Missing item type\nStop subscribing to the changes feed",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:429"
+        },
+        {
+            "message": "Missing item type\nFetch all the docs in this db, you can specify an array of keys to\nfetch by passing the <code>keys</code> field in the\n<code>options</code>\nparameter.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:484"
+        },
+        {
+            "message": "Missing item type\nFetch all the design docs in this db",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:514"
+        },
+        {
+            "message": "Missing item type\nFetch all the design docs with an index.html, <code>options</code>\nparameter expects an <code>eachApp</code> field which is a callback\ncalled on each app found.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:524"
+        },
+        {
+            "message": "Missing item type\nReturns the specified doc from the specified db.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:561"
+        },
+        {
+            "message": "Missing item type\nCreate a new document in the specified database, using the supplied\nJSON document structure. If the JSON structure includes the _id\nfield, then the document will be created with the specified document\nID. If the _id field is not specified, a new unique ID will be\ngenerated.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:602"
+        },
+        {
+            "message": "Missing item type\nSave a list of documents",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:657"
+        },
+        {
+            "message": "Missing item type\nDeletes the specified document from the database. You must supply\nthe current (latest) revision and <code>id</code> of the document\nto delete eg <code>removeDoc({_id:\"mydoc\", _rev: \"1-2345\"})</code>",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:679"
+        },
+        {
+            "message": "Missing item type\nRemove a set of documents",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:702"
+        },
+        {
+            "message": "Missing item type\nThe COPY command (which is non-standard HTTP) copies an existing\ndocument to a new or existing document.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:728"
+        },
+        {
+            "message": "Missing item type\nCreates (and executes) a temporary view based on the view function\nsupplied in the JSON request.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:763"
+        },
+        {
+            "message": "Missing item type\nFetch a _list view output, you can specify a list of\n<code>keys</code> in the options object to recieve only those keys.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:799"
+        },
+        {
+            "message": "Missing item type\nExecutes the specified view-name from the specified design-doc\ndesign document, you can specify a list of <code>keys</code>\nin the options object to recieve only those keys.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:834"
+        },
+        {
+            "message": "Missing item type\nFetch an arbitrary CouchDB database property",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:867"
+        },
+        {
+            "message": "Missing item type\nSet an arbitrary CouchDB database property",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:885"
+        },
+        {
+            "message": "Missing item type\nAccessing the root of a CouchDB instance returns meta information about\nthe instance. The response is a JSON structure containing information\nabout the server, including a welcome message and the version of the\nserver.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:912"
+        },
+        {
+            "message": "Missing item type\nRequest, configure, or stop, a replication operation.",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:931"
+        },
+        {
+            "message": "Missing item type\nFetch a new UUID",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:957"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:982"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:1031"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:1046"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _attachments/vendor/couchapp/jquery.couch.js:1068"
+        }
+    ]
+}
