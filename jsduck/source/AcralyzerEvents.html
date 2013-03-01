@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*
+ Copyright 2013 Kevin Gaudin (kevin.gaudin@gmail.com)
+
+ This file is part of Acralyzer.
+
+ Acralyzer is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Acralyzer is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Acralyzer.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+
+(function(acralyzerEvents, $, undefined ) {
+    &quot;use strict&quot;;
+    acralyzerEvents.LOGIN_CHANGE = &quot;login_change&quot;;
+    acralyzerEvents.LOGGED_IN = &quot;logged_in&quot;;
+    acralyzerEvents.LOGGED_OUT = &quot;logged_out&quot;;
+    acralyzerEvents.POLLING_FAILED = &quot;polling failed&quot;;
+    acralyzerEvents.APP_CHANGED = &quot;app changed&quot;;
+    acralyzerEvents.USER_PASSWORD_CHANGE = &quot;password_change&quot;;
+
+}( window.acralyzerEvents = window.acralyzerEvents || {}, window.jQuery, undefined ));
+</pre>
+</body>
+</html>

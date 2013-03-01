@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*
+ Copyright 2013 Kevin Gaudin (kevin.gaudin@gmail.com)
+
+ This file is part of Acralyzer.
+
+ Acralyzer is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Acralyzer is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Acralyzer.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+(function(acralyzerConfig,angular,acralyzer,acralyzerEvents) {
+    &quot;use strict&quot;;
+
+    function ReportsBrowserCtrl($scope, ReportsStore, $routeParams) {
+        if($routeParams.app) {
+            console.log(&quot;ReportsBrowser: Direct access to app &quot; + $routeParams.app);
+            $scope.acralyzer.setApp($routeParams.app);
+        } else {
+            console.log(&quot;ReportsBorwser: Access to default app &quot; + acralyzerConfig.defaultApp);
+            $scope.acralyzer.setApp(acralyzerConfig.defaultApp);
+        }
+
+        console.log(&quot;Init ReportsBrowserCtrl&quot;);
+        $scope.reportsCount = 15;
+        $scope.previousStartKeys = [];
+        $scope.selectedReport = &quot;&quot;;
+        $scope.startKey = null;
+        $scope.nextKey = null;
+        $scope.startNumber = 1;
+        $scope.endNumber = $scope.reportsCount;
+        $scope.fullSearch = false;
+        $scope.loading = true;
+        $scope.noFilter = { value: &quot;false&quot;, label: &quot;No filter&quot;};
+        $scope.noFilterValue = { value: &quot;false&quot;, label: &quot;All values&quot;};
+        $scope.availableFilters = [
+            $scope.noFilter,
+            {value: &quot;appver&quot;, label: &quot;Application version&quot;},
+            {value: &quot;androidver&quot;, label: &quot;Android version&quot;}
+        ];
+        $scope.filterName = $scope.noFilter;
+        $scope.filterValue = $scope.noFilterValue;
+
+        $scope.filterValues = [];
+
+
+        $scope.getNextPage = function() {
+            $scope.previousStartKeys.push($scope.startKey);
+            $scope.startKey = $scope.nextKey;
+            $scope.getData();
+        };
+
+        $scope.getPreviousPage = function() {
+            $scope.nextKey = null;
+            $scope.startKey = $scope.previousStartKeys.pop();
+            $scope.getData();
+        };
+
+        $scope.getData = function() {
+            $scope.loading = true;
+            var successHandler = function(data) {
+                // Success Handler
+                console.log(&quot;Refresh data for latest reports&quot;);
+                $scope.reports = data.rows;
+                $scope.totalReports = data.total_rows;
+                for(var row = 0; row &lt; $scope.reports.length; row++) {
+                    $scope.reports[row].displayDate = moment($scope.reports[row].key).fromNow();
+                }
+
+                // If there are more rows, here is the key to the next page
+                $scope.nextKey =data.next_row ? data.next_row.key : null;
+                $scope.startNumber = ($scope.previousStartKeys.length * $scope.reportsCount) + 1;
+                $scope.endNumber = $scope.startNumber + $scope.reports.length - 1;
+                console.log($scope);
+                $scope.loading = false;
+            };
+
+            var errorHandler = function(response, getResponseHeaders){
+                // Error Handler
+                $scope.reports=[];
+                $scope.totalReports=&quot;&quot;;
+            };
+
+            if($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) {
+                ReportsStore.reportsList($scope.startKey, $scope.reportsCount, $scope.fullSearch, successHandler, errorHandler);
+            } else {
+                ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value,$scope.startKey, $scope.reportsCount, $scope.fullSearch, successHandler, errorHandler);
+            }
+        };
+
+        $scope.changeFilterValues = function() {
+
+            if($scope.filterName === $scope.noFilter) {
+                $scope.filterValue = $scope.noFilterValue;
+                $scope.filterValueSelected();
+            } else {
+                var getFilteredValues;
+                if($scope.filterName.value === &quot;androidver&quot;) {
+                    getFilteredValues = ReportsStore.androidVersionsList;
+                } else if ($scope.filterName.value === &quot;appver&quot;) {
+                    getFilteredValues = ReportsStore.appVersionsList;
+                }
+
+                if(getFilteredValues) {
+                    getFilteredValues(function(data){
+                        console.log(&quot;Update filter values&quot;);
+                        $scope.filterValues.length = 0;
+                        $scope.filterValues.push($scope.noFilterValue);
+                        for(var row = 0; row &lt; data.rows.length; row++) {
+                            $scope.filterValues.push({value:data.rows[row].key[0], label:data.rows[row].key[0]});
+                        }
+                        $scope.filterValues.sort();
+                    });
+                }
+            }
+        };
+
+        $scope.filterValueSelected = function() {
+            // reset pagination
+            $scope.startKey = null;
+            $scope.nextKey = null;
+            $scope.previousStartKeys.length = 0;
+            $scope.getData();
+        };
+
+        $scope.loadReport = function(report) {
+            $scope.selectedReport = ReportsStore.reportDetails(report.id, function(data) {
+                data.readableUptime = moment.duration(data.uptime, 'seconds').humanize();
+                data.formatedCrashDate = moment(data.USER_CRASH_DATE).format('LLL');
+                data.formatedTimestamp = moment(data.timestamp).format('LLL');
+            });
+        };
+
+
+        $scope.$on(acralyzerEvents.LOGGED_IN, $scope.getData);
+        $scope.$on(acralyzerEvents.LOGGED_OUT, $scope.getData);
+        $scope.getData();
+    }
+
+
+    acralyzer.controller('ReportsBrowserCtrl', ReportsBrowserCtrl);
+
+})(window.acralyzerConfig,window.angular,window.acralyzer,window.acralyzerEvents);
+</pre>
+</body>
+</html>
